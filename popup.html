@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>Kick the Goat</title>  
+  <style>
+    body {
+      overflow: hidden;
+      margin-top: 0px;
+    }
+    #main {
+      width: 300px;
+      font-family: arial, helvetica, sans-serif;
+      font-size: 13;
+    }    
+    .ctrl_wrap {
+      width: 300px;
+      float: left;
+    }
+    .ctrl_wrap input[type=range] {
+      width: 180px;
+      height: 16px;
+    }
+    .buttons {
+      margin-top: 10px;
+    }
+    #my_username {
+      float: left;
+      width: 160px;
+    }
+    #the_goat {
+      float: left;
+      width: 160px;
+    }
+    #badge {
+      float: left;
+      width: 160px;
+    }
+    
+    body.nooutline * {
+      outline: none;
+    }
+  </style>
+  <script src="common.js"></script>
+  <script src="popup.js"></script>
+</head>
+<body>
+
+<div id="main">
+      <div class="ctrl_label">
+        <label for="username">Your Username:</label>
+      </div>
+      <div class="ctrl_wrap">
+        <input id="my_username"></input>
+      </div>
+      <div class="ctrl_label">
+        <label for="badge">Desired Badge:</label>
+      </div>
+      <div class="ctrl_wrap">
+        <select id="badge" class="ctrl">
+          <option value="octopus">Breakfast Octopus</option>
+          <option selected value="scapegoat">Scape Goat</option>
+          <option value="staff">Staff Beaker</option>
+          <option value="kickstarter">Kick Starter</option>
+          <option value="korean-member-support">Korean Support Staff</option>
+          <option value="vmp">Very Mediocre Person</option>
+        </select>
+      </div>
+      <div class="ctrl_label">
+        <label for="goat">Current Goat:</label>
+      </div>
+      <div class="ctrl_wrap">
+        <input id="the_goat"></input>
+      </div>
+
+      <div class="ctrl_wrap">
+        <button id="save_btn" title="Save Current Settings">
+          Save Settings
+        </button>
+      </div>
+</div>
+
+</body>
+</html>
