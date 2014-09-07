@@ -3,7 +3,7 @@
   "version": "0.2",
   "description": "It's probably the goat's fault.",
   "manifest_version": 2,
-  "background": { "scripts": ["background.js"] },
+  "background": { "scripts": ["common.js", "background.js"]},
   "permissions": ["tabs"],
   "page_action": {
     "default_icon": "icon.png",
@@ -16,5 +16,4 @@
       "js": ["jquery-2.1.1.min.js", "goatMe.js"]
     } 
   ]
-
 }

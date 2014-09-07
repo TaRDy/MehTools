@@ -16,3 +16,21 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     chrome.pageAction.show(tabId);
   }
 });
+
+chrome.runtime.onInstalled.addListener(function(details){
+    if(details.reason == "install"){
+        // lets setup the local storage to some defaults
+        localStorage['use_badge'] = true;
+        localStorage['use_blame_button'] = true;
+
+        localStorage['username'] = DEFAULT_USERNAME;
+        localStorage['badge'] = DEFAULT_BADGE;
+        localStorage['goat'] = DEFAULT_GOAT;
+                
+    }else if(details.reason == "update"){
+        // do nothing here for now, keep the user's settings
+
+        //var thisVersion = chrome.runtime.getManifest().version;
+        //console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+    }
+});
