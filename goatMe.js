@@ -4,19 +4,28 @@ console.log('so you wanna be a goat?');
 // does not work on main forum page, only on topics right now
 
 chrome.runtime.sendMessage({method: "getLocalStorage", key: "ignore_this"}, function(response) {
+  
+  // we have to know the structure of the data beforehand in order to parse this...
+  var use_custom_badge = response.data.use_badge;
+  var show_blame = response.data.use_blame_button;
+
   var user_name = response.data.username;
   var badge = response.data.badge;
   var goat = response.data.goat;
 
-  SetCustomUserInfo(user_name, badge);
-  AddGoatBlameButton(goat);
+  if ( to_bool(use_custom_badge) )
+    SetCustomUserInfo(user_name, badge);
+
+  if ( to_bool(show_blame) )
+    AddGoatBlameButton(goat);
 
   //console.log(response.data);
-  //console.log(response.data.username);
-  //console.log(response.data.badge);
-  //console.log(response.data.goat);
 });
 
+function to_bool(str)
+{
+  return str !== "false";
+}
 
 function SetCustomUserInfo(user_name, badge) {
 	console.log('username is: ' + user_name);

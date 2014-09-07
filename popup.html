@@ -1,50 +1,43 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Kick the Goat</title>  
   <style>
-    body {
-      overflow: hidden;
-      margin-top: 0px;
-    }
-    #main {
-      width: 300px;
-      font-family: arial, helvetica, sans-serif;
-      font-size: 13;
-    }    
-    .ctrl_wrap {
-      width: 300px;
-      float: left;
-    }
-    .ctrl_wrap input[type=range] {
-      width: 180px;
-      height: 16px;
-    }
-    .buttons {
-      margin-top: 10px;
-    }
-    #my_username {
-      float: left;
-      width: 160px;
-    }
-    #the_goat {
-      float: left;
-      width: 160px;
-    }
-    #badge {
-      float: left;
-      width: 160px;
-    }
-    
-    body.nooutline * {
-      outline: none;
-    }
+
+  body {
+    margin: 10px 20px;
+  }
+
+  fieldset {
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  button {
+    margin: 0 auto;
+  }
+
+  input {
+    margin-bottom: 10px;
+  }
+
+  .button_div {
+    text-align: center;
+  }
+
   </style>
-  <script src="common.js"></script>
+  <script src="jquery-2.1.1.min.js"></script>
   <script src="popup.js"></script>
 </head>
 <body>
 
-<div id="main">
+<section id="main">
+  <fieldset>
+    <legend>Custom Badge</legend>
+
+      <label for="custom_badge_enable">Use Custom Badge: </input>
+      <input id="custom_badge_enable" type="checkbox" />
+
       <div class="ctrl_label">
         <label for="username">Your Username:</label>
       </div>
@@ -64,19 +57,31 @@
           <option value="vmp">Very Mediocre Person</option>
         </select>
       </div>
-      <div class="ctrl_label">
-        <label for="goat">Current Goat:</label>
-      </div>
-      <div class="ctrl_wrap">
-        <input id="the_goat"></input>
-      </div>
+  </fieldset>
 
-      <div class="ctrl_wrap">
-        <button id="save_btn" title="Save Current Settings">
-          Save Settings
-        </button>
+  <fieldset>
+    <legend>Who to Blame</legend>
+
+      <label for="blame_button_enable">Add Blame Button: </input>
+      <input id="blame_button_enable" type="checkbox" />
+
+      <div class="ctrl_label">
+        <label for="goat">Goat to Blame:</label>
       </div>
-</div>
+      <div class="ctrl_wrap">
+        <input id="the_goat">
+      </div>
+    </fieldset>
+
+  <div class="button_div">
+    <button id="save_btn" title="Save Current Settings">
+      Save Settings
+    </button>
+  </div>
+</section>
+
+<footer>
+</footer>
 
 </body>
 </html>

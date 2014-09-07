@@ -1,70 +1,82 @@
+var DEFAULT_USERNAME = "TaRDy";
+var DEFAULT_BADGE = "octopus";
+var DEFAULT_GOAT = "studerc";
+
+function to_bool(str)
+{
+  return str !== "false";
+}
+
 function load() { 
   console.log('loading popup...');
 
-  var saveButton = $('save_btn');
-  saveButton.addEventListener('click', function(evt) {
-    save_settings();
-  });
-
-  var badge = $('badge');
+  $('#save_btn').click(save_settings);
+  
+  // get the current badge 
   var currentBadge = localStorage['badge'] || DEFAULT_BADGE;
-  for (var i = 0; i < badge.options.length; i++) {
-    if (badge.options[i].value == currentBadge) {
-      badge.selectedIndex = i;
-      break;
-    }
-  }
-  localStorage['badge'] = badge.options[badge.selectedIndex].value;
-  badge.addEventListener('change', function() {
-    localStorage['badge'] = badge.options[badge.selectedIndex].value;
-  }, false);
+
+  // select the current badge
+  $('#badge option[value="' + currentBadge + '"]').prop('selected', true);
+
+  // set the local storage
+  localStorage['badge'] = $('#badge option:selected').val();
 
 
+  GetValueSetDisplay('username', DEFAULT_USERNAME, '#my_username');  
+  GetValueSetDisplay('goat', DEFAULT_GOAT, '#the_goat');
 
-  SetValueAddListener('username', DEFAULT_USERNAME, 'my_username');  
-  SetValueAddListener('goat', DEFAULT_GOAT, 'the_goat');
-  SetValueAddListener('badge', DEFAULT_BADGE, 'badge');
+  SetCheckValue('use_badge', true, '#custom_badge_enable');
+  SetCheckValue('use_blame_button', true, '#blame_button_enable');
 
-  console.log('added the values');  
+  console.log('added the values');
 }
 
-function SetValueAddListener(storage_id, default_val, html_id)
+function GetValueSetDisplay(storage_id, default_val, html_id)
 {
   var val = localStorage[storage_id] || default_val;
 
   localStorage[storage_id] = val;
 
-  if ($(html_id) === null)
-    return;
+  $(html_id).val(val);
+}
 
+function SetCheckValue(storage_id, default_val, html_id)
+{
+  var val = localStorage[storage_id] || default_val;
 
-  $(html_id).value = val;
+  console.log('val is: ' + val);
 
-  $(html_id).addEventListener('change', function(evt) {
-  localStorage[storage_id] = $(html_id).value;
-  }, false);
+  localStorage[storage_id] = val;
+
+  $(html_id).prop('checked', to_bool(val));
+}
+
+function StoreByProp(storage_id, html_id, property_val)
+{
+  localStorage[storage_id] = $(html_id).prop(property_val);
 }
 
 function save_settings(){
   console.log('saving...');
 
-  // chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
-  //   var code = 'window.location.reload();';
-  //   chrome.tabs.executeScript(arrayOfTabs[0].id, {code: code});
-  // });
+  // get the enabled states
+  StoreByProp('use_badge', '#custom_badge_enable', 'checked');
+  StoreByProp('use_blame_button', '#blame_button_enable', 'checked');
 
+  // grab username
+  StoreByProp('username', '#my_username', 'value');
+
+  // grab the desired badge for local storage
+  StoreByProp('badge', '#badge option:selected', 'value');
+
+  // grab goat to blame
+  StoreByProp('goat', '#the_goat', 'value');
+
+  // reload the tab and then close this window
   chrome.tabs.query({active: true, currentWindow: true}, function (arrayOfTabs) {
     console.log('tab id is:' + arrayOfTabs[0].id);
     chrome.tabs.reload(arrayOfTabs[0].id, null, function() { window.close(); });
   });
-
-  //window.close();
-
-  //chrome.storage.local.set({ 'username': $('my_username').value });
-}
-
-function ClosePopup() {
-  window.close();
 }
 
 document.addEventListener('DOMContentLoaded', load);

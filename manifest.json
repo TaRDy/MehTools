@@ -1,6 +1,6 @@
 {
   "name": "Meh Tools",
-  "version": "0.1",
+  "version": "0.2",
   "description": "It's probably the goat's fault.",
   "manifest_version": 2,
   "background": { "scripts": ["background.js"] },
