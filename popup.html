@@ -5,20 +5,30 @@
   <style>
 
   body {
-    margin: 10px 20px;
+    margin: 1em 1.25em;
   }
 
   fieldset {
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 1em;
+    padding: .5em 1em;
+    white-space: nowrap;
   }
 
   button {
     margin: 0 auto;
   }
 
-  input {
-    margin-bottom: 10px;
+  .input_div {
+    margin-bottom: .5em;
+  }
+
+  .check_div {
+    margin: .5em 0;
+  }
+
+  input[type=checkbox] {
+    float: right;
+    padding: 0 .5em;
   }
 
   .button_div {
@@ -35,20 +45,27 @@
 <section id="main">
   <fieldset>
     <legend>Custom Badge</legend>
+      
+      <div class="check_div">
+        <label for="self_star_enable">Self Star Automatically: </input>
+        <input id="self_star_enable" type="checkbox" />
+      </div>
 
-      <label for="custom_badge_enable">Use Custom Badge: </input>
-      <input id="custom_badge_enable" type="checkbox" />
+      <div class="check_div">
+        <label for="custom_badge_enable">Use Custom Badge: </input>
+        <input id="custom_badge_enable" type="checkbox" />
+      </div>
 
       <div class="ctrl_label">
         <label for="username">Your Username:</label>
       </div>
-      <div class="ctrl_wrap">
+      <div class="input_div">
         <input id="my_username"></input>
       </div>
       <div class="ctrl_label">
         <label for="badge">Desired Badge:</label>
       </div>
-      <div class="ctrl_wrap">
+      <div class="input_div">
         <select id="badge" class="ctrl">
           <option value="octopus">Breakfast Octopus</option>
           <option selected value="scapegoat">Scape Goat</option>
@@ -63,13 +80,15 @@
   <fieldset>
     <legend>Who to Blame</legend>
 
-      <label for="blame_button_enable">Add Blame Button: </input>
-      <input id="blame_button_enable" type="checkbox" />
+      <div class="check_div">
+        <label for="blame_button_enable">Add Blame Button: </input>
+        <input id="blame_button_enable" type="checkbox" />
+      </div>
 
       <div class="ctrl_label">
         <label for="goat">Goat to Blame:</label>
       </div>
-      <div class="ctrl_wrap">
+      <div class="input_div">
         <input id="the_goat">
       </div>
     </fieldset>

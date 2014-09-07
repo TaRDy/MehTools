@@ -8,6 +8,7 @@ chrome.runtime.sendMessage({method: "getLocalStorage", key: "ignore_this"}, func
   // we have to know the structure of the data beforehand in order to parse this...
   var use_custom_badge = response.data.use_badge;
   var show_blame = response.data.use_blame_button;
+  var self_star = response.data.use_self_star;
 
   var user_name = response.data.username;
   var badge = response.data.badge;
@@ -18,6 +19,9 @@ chrome.runtime.sendMessage({method: "getLocalStorage", key: "ignore_this"}, func
 
   if ( to_bool(show_blame) )
     AddGoatBlameButton(goat);
+
+  if ( to_bool(self_star) )
+    StarPostsByUser(user_name);
 
   //console.log(response.data);
 });
@@ -62,4 +66,37 @@ function AddGoatBlameButton(goat)
             i.val("@" + n + " "), r.find("input[name=comment]").val(t.attr("id")), Dialog.show("#add-reply-mobile"), Textarea.moveCursorToEnd(i[0])
         }
     })
+}
+
+function StarPostsByUser(user_name)
+{
+  var href_name = "/@" + user_name;
+
+  // gather all the unstarred stars on the page
+  var unvoted = $('.votes.abstain');
+
+  for (i = 0; i < unvoted.length; i++)
+  {
+    var star = $(unvoted[i]);
+
+    // look to see if the username is in the parent comment
+    var parent_id = star.data("parentId");
+    var parent_comment = $("#" + parent_id);
+
+    // if we had any results it must be valid!
+    if (parent_comment.find('a.h-card[href="' + href_name + '"]').length)
+    {
+      CallStarPost(star);
+    }
+  }
+}
+
+function CallStarPost(star)
+{
+  var e = star;
+  ($.post("/forum/votes/add", {
+            _csrf: $("input[name=_csrf]").attr("value"),
+            parentId: e.data("parentId"),
+            parentType: e.data("parentType")
+        }), e.addClass("for").removeClass("abstain"), e.html(parseInt(e.html()) + 1))
 }

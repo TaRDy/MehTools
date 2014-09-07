@@ -22,11 +22,12 @@ chrome.runtime.onInstalled.addListener(function(details){
         // lets setup the local storage to some defaults
         localStorage['use_badge'] = true;
         localStorage['use_blame_button'] = true;
+        localStorage['use_self_star'] = false;
 
         localStorage['username'] = DEFAULT_USERNAME;
         localStorage['badge'] = DEFAULT_BADGE;
         localStorage['goat'] = DEFAULT_GOAT;
-                
+
     }else if(details.reason == "update"){
         // do nothing here for now, keep the user's settings
 
