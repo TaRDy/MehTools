@@ -46,17 +46,20 @@ function to_bool(str)
 }
 
 function SetCustomUserInfo(user_name, badge) {
-	console.log('username is: ' + user_name);
+	//console.log('username is: ' + user_name);
 
 	var href_name = "/@" + user_name;
-	var badge_name = badge;
-	// other options are: octopus, staff, scapegoat, kickstarter, vmp, korean-member-support
-
+  var badge_name = 'badge ' + badge;
 	var badge_title = "Breakfast Octopus, Scapegoat of the Month, Kickstarter Backer, Very Mediocre Person";
 
-	var comment_html = "<a class=\"h-card p-nickname\" href=\"" + href_name + "\"><span><span class=\"badge " + badge_name + "\" title=\"" + badge_title + "\"></span>" + user_name + "</span></a>";
+  // topics page
+	$('a.h-card[href="' + href_name + '"]').find('.badge').attr({class: badge_name , title: badge_title });
 
-	$('a.h-card[href="' + href_name + '"]').html(comment_html);
+  // main forum page author
+  $('.created-by[href="' + href_name + '"]').find('.badge').attr({class: badge_name , title: badge_title });
+
+  // main forum page, last reply
+  $('.last-activity-by a[href="' + href_name + '"]').find('.badge').attr({class: badge_name , title: badge_title });
 }
 
 function AddGoatBlameButton(goat, goat_curse)
@@ -107,22 +110,22 @@ function StarPostsByUser(user_name)
   var href_name = "/@" + user_name;
 
   // gather all the unstarred stars on the page
-  var unvoted = $('.votes.abstain');
+  $('.votes.abstain').each( function() {
 
-  for (i = 0; i < unvoted.length; i++)
-  {
-    var star = $(unvoted[i]);
+    // in-topic match
+    var topic_match = ($(this).parent().find('a.h-card[href="' + href_name + '"]').length > 0);
 
-    // look to see if the username is in the parent comment
-    var parent_id = star.data("parentId");
-    var parent_comment = $("#" + parent_id);
+    // main forum page
+    // have to filter out parent by desktop because there is mobile too
+    var main_page_match = ($(this).parent('.desktop').find('.created-by[href="' + href_name + '"]').length > 0);    
 
-    // if we had any results it must be valid!
-    if (parent_comment.find('a.h-card[href="' + href_name + '"]').length)
+    //debugger;
+
+    if ( topic_match || main_page_match )
     {
-      CallStarPost(star);
+      CallStarPost($(this));
     }
-  }
+  });
 }
 
 function CallStarPost(star)
