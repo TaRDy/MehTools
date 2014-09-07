@@ -13,7 +13,8 @@
   "content_scripts": [
     {
       "matches": ["https://meh.com/forum/*"],
-      "js": ["jquery-2.1.1.min.js", "goatMe.js"]
+      "js": ["jquery-2.1.1.min.js", "goatMe.js", "meh_functions.js"]
     } 
-  ]
+  ],
+  "web_accessible_resources": ["inject.js"]
 }

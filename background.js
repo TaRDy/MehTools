@@ -27,6 +27,7 @@ chrome.runtime.onInstalled.addListener(function(details){
         localStorage['username'] = DEFAULT_USERNAME;
         localStorage['badge'] = DEFAULT_BADGE;
         localStorage['goat'] = DEFAULT_GOAT;
+        localStorage['goat_curse'] = DEFAULT_GOAT_CURSE;
 
     }else if(details.reason == "update"){
         // do nothing here for now, keep the user's settings
