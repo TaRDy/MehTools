@@ -1,8 +1,5 @@
- - Make the popup look pretty.  It is very ugly and simple.
- - Automagically know who the blame goes to instead of making it user input.
- - Allow user to toggle on/off a function instead of all on.
- - Make it work with the main "meh.com/forum" page.
- - Clean some unused crap up.
- - Fix Reply/Blame button interplay
- - Come up with a better name, description...everything?
  - Convince someone to pay my google extension developers fee...$5
+ - The popup settings could still use some work.
+ - Automagically know who the blame goes to instead of making it user input.
+ - Clean some unused crap up.
+ - Come up with a better name, description...everything?
