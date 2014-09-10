@@ -12,9 +12,6 @@ s.onload = function() {
 
 console.log('so you wanna be a goat?');
 
-  // known bugs:
-  // does not work on main forum page, only on topics right now
-
   chrome.runtime.sendMessage({method: "getLocalStorage", key: "ignore_this"}, function(response) {
   
     // we have to know the structure of the data beforehand in order to parse this...
@@ -109,22 +106,41 @@ function StarPostsByUser(user_name)
 {
   var href_name = "/@" + user_name;
 
-  // gather all the unstarred stars on the page
-  $('.votes.abstain').each( function() {
 
-    // in-topic match
-    var topic_match = ($(this).parent().find('a.h-card[href="' + href_name + '"]').length > 0);
+  // gather all the unstarred comment stars on a topic page
+  $('.votes.abstain[data-parent-type="comment"').each( function() {
 
-    // main forum page
-    // have to filter out parent by desktop because there is mobile too
-    var main_page_match = ($(this).parent('.desktop').find('.created-by[href="' + href_name + '"]').length > 0);    
+    // comment match
+    var comment_match = ($(this).parent().children('.created').children('a.h-card[href="' + href_name + '"]').length > 0);
 
-    //debugger;
-
-    if ( topic_match || main_page_match )
+    if (comment_match)
     {
       CallStarPost($(this));
     }
+  });
+
+  // gather all the unstarred reply stars on a topic page
+  $('.votes.abstain[data-parent-type="reply"').each(function () {
+
+      // reply match
+      var reply_match = ($(this).closest('li.reply').children('.created').children('a.h-card[href="' + href_name + '"]').length > 0);
+
+      if (reply_match) {
+          CallStarPost($(this));
+      }
+  });
+
+  // main forum page and topic on the topic page
+  $('.votes.abstain[data-parent-type="topic"]').each(function () {
+      
+      // have to filter out parent by desktop because there is mobile too
+      var main_page_match = ($(this).parent('.desktop').find('.created-by[href="' + href_name + '"]').length > 0);
+
+      var topic_match = ($(this).parent('.topic').children('.created').children('a.h-card[href="' + href_name + '"]').length > 0);
+
+      if (main_page_match || topic_match) {
+          CallStarPost($(this));
+      }
   });
 }
 
